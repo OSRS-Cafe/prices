@@ -1,4 +1,5 @@
 import { ItemDataHelper } from "./item_data_helper.js";
+import { StorageManager } from "./storage_manager.js";
 
 export class TableHelper {
     constructor({ table_element }) {
@@ -108,6 +109,22 @@ export class TableHelper {
         item_price_low.innerText = `⬇️${item_data.low}`;
         item_price_low.style.userSelect = "none";
         item_container.appendChild(item_price_low);
+
+        const item_delete_button = document.createElement("button");
+        item_delete_button.innerText = "Delete";
+        item_delete_button.style.display = "none";
+        item_delete_button.onclick = () => {
+            StorageManager.get_active_collection().add_item(x, y, null);
+            refresh_table_func(); //This function handles saving inside app.js. TODO: This should probably be handled more clearly
+        }
+        item_container.appendChild(item_delete_button);
+
+        item_container.onclick = () => {
+            item_delete_button.style.display = "";
+            setTimeout(() => {
+                item_delete_button.style.display = "none";
+            }, 3000);
+        }
 
         cell.appendChild(item_container);
     }
