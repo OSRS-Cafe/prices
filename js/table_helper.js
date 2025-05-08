@@ -59,6 +59,7 @@ export class TableHelper {
         item_container.style.zIndex = "50";
         item_container.style.cursor = "move";
         item_container.draggable = true;
+        item_container.style.touchAction = "none";
         item_container.ondrop = (e) => {
             e.preventDefault();
             const data = JSON.parse(e.dataTransfer.getData("item"));
@@ -89,7 +90,9 @@ export class TableHelper {
         const item_icon = document.createElement("img");
         item_icon.src = `https://api-dev.osrs.cafe/ge/icon/${item_id}`;//"img/coins.webp";
         item_icon.draggable = false;
+        item_icon.style.touchAction = "none";
         item_icon.style.userSelect = "none";
+        item_icon.oncontextmenu = e => e.preventDefault()
         item_container.appendChild(item_icon);
 
         const item_price_high = document.createElement("p");
