@@ -37,6 +37,7 @@ export class StorageManager {
     static #collection_edit;
     static #collection_remove;
     static #collection_add;
+    static #state_change_func
 
     static init({
         collection_dropdown,
@@ -50,6 +51,7 @@ export class StorageManager {
         this.#collection_edit = collection_edit;
         this.#collection_remove = collection_remove;
         this.#collection_add = collection_add;
+        this.#state_change_func = state_change_func;
 
         this.#collection_dropdown.onchange = (e) => {
             this.active_index = this.#collection_dropdown.value;
@@ -97,13 +99,24 @@ export class StorageManager {
             saved_data = JSON.stringify(collections_temp);
             localStorage.setItem("collections", saved_data);
         }
-        this.#collections = JSON.parse(saved_data).map(json_collection => ItemCollection.from_json(json_collection));
+        this.load();
     }
 
     static is_empty = () => this.#collections.length === 0;
 
     static save() {
         localStorage.setItem("collections", JSON.stringify(this.#collections));
+    }
+
+    static load(refresh = false) {
+        this.#collections = JSON.parse(localStorage.getItem("collections")).map(json_collection => ItemCollection.from_json(json_collection));
+        //TODO: This is done so that we can call this while we may not have the data yet needed for refreshing, eg item data
+        //There should be a more clean solution to calling these while the data may not be there yet...
+        //This is a hack!
+        if(refresh) {
+            this.refresh_ui();
+            this.#state_change_func();
+        }
     }
 
     static get_active_collection() {
