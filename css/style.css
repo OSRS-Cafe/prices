@@ -1,0 +1,45 @@
+body {
+    background-color: #393939;
+    color: lightgray;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 20px;
+    font-family: "Calibri", serif
+}
+
+img {
+    image-rendering: pixelated;
+}
+
+.grayscale {
+    filter: grayscale(1);
+}
+
+.world_sort_tab {
+    user-select: none;
+    cursor: pointer;
+}
+
+td {
+    padding: 0 5px;
+    width: 64px;
+    height: 64px;
+    border: 2px solid #000; /* black box around each cell */
+    /*background-color: rgba(255, 255, 255, 0.8); /* translucent background inside cells */
+    /*padding: 20px;
+    /*text-align: center;*/
+    border-radius: 5px; /* optional rounded corners */
+}
+
+#inv {
+    /*background-image: url('../img/inventory_tab.webp');
+    background-size: 100% auto;
+    padding: 48px 32px;
+    background-repeat: no-repeat;
+    background-position: center;*/
+    background-color: saddlebrown;
+    /*border-collapse: collapse;*/
+}
