@@ -1,4 +1,5 @@
 import { ItemDataHelper } from "./item_data_helper.js";
+import { FocusHelper } from "./focus_helper.js";
 
 export class RefreshManager {
     static #refresh_time = 60;
@@ -11,7 +12,7 @@ export class RefreshManager {
     static #tick() {
         if(this.#refresh_countdown < 0) {
             this.#countdown_label.innerText = "Loading...";
-            if(!this.#refreshing) {
+            if(!this.#refreshing && FocusHelper.is_focused()) {
                 this.#refreshing = true;
                 ItemDataHelper.refresh_data().then(() => {
                     this.#table_refresh_func();
