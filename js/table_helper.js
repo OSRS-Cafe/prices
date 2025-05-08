@@ -19,7 +19,6 @@ export class TableHelper {
                     const item_container = document.createElement("div");
                     item_container.style.width = "64px";
                     item_container.style.height = "96px";
-                    item_container.style.backgroundColor = "brown";
                     item_container.ondragover = e => e.preventDefault()
                     item_container.ondrop = (e) => {
                         e.preventDefault();
@@ -31,7 +30,7 @@ export class TableHelper {
                     item_container.onclick = () => {
                         const new_item_id = window.prompt("Enter item ID");
                         if(new_item_id != null) {
-                            if(!ItemDataHelper.get_item(new_item_id) == null) {
+                            if(ItemDataHelper.get_item(new_item_id) == null) {
                                 window.alert("Item not found");
                                 return;
                             }
@@ -53,7 +52,7 @@ export class TableHelper {
         if(item_data == null) {
             console.error("Item id not valid", item_id);
             set_item_func(x, y, null);
-            refresh_table_func();
+            refresh_table_func(); //TODO: This causes errors for some reason, has worked before. Now it duplicates the table. Check out why!
             return;
         }
         const item_container = document.createElement("div");
@@ -108,5 +107,9 @@ export class TableHelper {
         item_container.appendChild(item_price_low);
 
         cell.appendChild(item_container);
+    }
+
+    remove_table() {
+        this.table_element.innerHTML = "";
     }
 }

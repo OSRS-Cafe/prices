@@ -9,9 +9,9 @@ export class ItemCollection {
         this.width = width;
         this.height = height;
         this.items = [];
-        for(let y = 0; y < width; y++) {
+        for(let y = 0; y < height; y++) {
             const current = []
-            for(let x = 0; x < height; x++) {
+            for(let x = 0; x < width; x++) {
                 current[x] = null;
             }
             this.items[y] = current;
@@ -20,10 +20,6 @@ export class ItemCollection {
 
     add_item(x, y, item_id) {
         this.items[y][x] = item_id;
-    }
-
-    to_json() {
-        return JSON.stringify(this);
     }
 
     static from_json(json) {
@@ -47,6 +43,7 @@ export class StorageManager {
         collection_edit,
         collection_remove,
         collection_add,
+        collection_add_custom,
         state_change_func
     }) {
         this.#collection_dropdown = collection_dropdown;
@@ -61,13 +58,30 @@ export class StorageManager {
 
         this.#collection_remove.onclick = () => {
             this.#collections.splice(this.active_index, 1);
-            this.active_index = 0; //TODO: Would be nicer to not go to 0, but n - 1 :,)
+            this.active_index--;
+            this.active_index = Math.max(this.active_index, 0);
             this.refresh_ui();
+            state_change_func();
         };
 
         this.#collection_add.onclick = () => {
-            this.#collections.push(new ItemCollection());
+            this.active_index = this.#collections.push(new ItemCollection()) - 1;
             this.refresh_ui();
+            state_change_func();
+        };
+
+        collection_add_custom.onclick = () => {
+            const name = window.prompt("Name", "New Collection") ?? "New Collection";
+            const width = parseInt(window.prompt("Width", "4"));
+            const height = parseInt(window.prompt("Height", "7"));
+            if(isNaN(width) || isNaN(height)) {
+                window.alert("Bad width or height!");
+                return;
+            }
+
+            this.active_index = this.#collections.push(new ItemCollection(name, width, height)) - 1;
+            this.refresh_ui();
+            state_change_func();
         };
 
         this.#collection_edit.onclick = () => {
@@ -86,6 +100,16 @@ export class StorageManager {
         this.#collections = JSON.parse(saved_data).map(json_collection => ItemCollection.from_json(json_collection));
     }
 
+    static is_empty = () => this.#collections.length === 0;
+
+    static save() {
+        localStorage.setItem("collections", JSON.stringify(this.#collections));
+    }
+
+    static get_active_collection() {
+        return this.#collections[this.active_index];
+    }
+
     static refresh_ui() {
         const coll = this.#collections;
         this.#collection_edit.disabled = coll.length === 0;
@@ -99,5 +123,6 @@ export class StorageManager {
             this.#collection_dropdown.appendChild(new_item);
         })
         this.#collection_dropdown.value = this.active_index;
+        this.save(); //TODO: Not the most optimal location
     }
 }

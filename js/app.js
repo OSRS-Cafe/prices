@@ -7,28 +7,18 @@ const table_helper = new TableHelper({
     table_element: document.getElementById("inv")
 })
 
-const dev_table_data = {
-    width: 4,
-    height: 7,
-    items: []
-}
-for(let y = 0; y < dev_table_data.height; y++) {
-    const current = []
-    for(let x = 0; x < dev_table_data.width; x++) {
-        current[x] = null;
-    }
-    dev_table_data.items[y] = current;
-}
-dev_table_data.items[0][0] = 1965;
-dev_table_data.items[2][2] = 1521;
-
 
 function set_item_func(x, y, item) {
-    dev_table_data.items[y][x] = item;
+    StorageManager.get_active_collection().add_item(x, y, item);
 }
 
 function refresh_table_func() {
-    table_helper.create_table(dev_table_data, set_item_func, refresh_table_func);
+    if(!StorageManager.is_empty()) {
+        table_helper.create_table(StorageManager.get_active_collection(), set_item_func, refresh_table_func);
+    } else {
+        table_helper.remove_table();
+    }
+    StorageManager.save(); //TODO: Not the most optimal location
 }
 
 StorageManager.init({
@@ -36,7 +26,8 @@ StorageManager.init({
     collection_edit: document.getElementById("collection-edit"),
     collection_remove: document.getElementById("collection-remove"),
     collection_add: document.getElementById("collection-add"),
-    state_change_func: () => { console.log("State changed, holy moly!"); }
+    collection_add_custom: document.getElementById("collection-add-custom"),
+    state_change_func: () => { refresh_table_func(); }
 });
 StorageManager.refresh_ui();
 

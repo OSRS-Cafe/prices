@@ -1,5 +1,6 @@
 import { ItemDataHelper } from "./item_data_helper.js";
 import { FocusHelper } from "./focus_helper.js";
+import { StorageManager } from "./storage_manager.js";
 
 export class RefreshManager {
     static #refresh_time = 60;
@@ -10,6 +11,11 @@ export class RefreshManager {
     static #refreshing = false;
 
     static #tick() {
+        if(StorageManager.is_empty()) {
+            this.#countdown_label.innerText = `Add a collection to start the Auto-Updater!`;
+            return;
+        }
+
         if(this.#refresh_countdown < 0) {
             this.#countdown_label.innerText = "Loading...";
             if(!this.#refreshing && FocusHelper.is_focused()) {

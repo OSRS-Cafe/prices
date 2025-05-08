@@ -35,11 +35,13 @@ td {
 }
 
 #inv {
-    /*background-image: url('../img/inventory_tab.webp');
-    background-size: 100% auto;
+    background-image: url('../img/inventory_tab.webp');
+    background-size: 100% 100%;
+    padding: 20px;
+    /*background-size: 100% auto;
     padding: 48px 32px;
     background-repeat: no-repeat;
     background-position: center;*/
-    background-color: saddlebrown;
+    /*background-color: saddlebrown;*/
     /*border-collapse: collapse;*/
 }
