@@ -3,10 +3,14 @@ import { TableHelper } from "./table_helper.js";
 import { RefreshManager } from "./refresh_manager.js";
 import { FocusHelper } from "./focus_helper.js";
 
+//Enforce HTTPS (https://stackoverflow.com/a/4723302)
+if (location.host !== "127.0.0.1" && location.protocol !== 'https:' && location.protocol !== 'file:') {
+    location.replace(`https:${location.href.substring(location.protocol.length)}`);
+}
+
 const table_helper = new TableHelper({
     table_element: document.getElementById("inv")
 })
-
 
 function set_item_func(x, y, item) {
     StorageManager.get_active_collection().add_item(x, y, item);
