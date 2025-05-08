@@ -119,12 +119,15 @@ export class TableHelper {
         }
         item_container.appendChild(item_delete_button);
 
-        item_container.onclick = () => {
+        const delete_trigger = () => {
             item_delete_button.style.display = "";
             setTimeout(() => {
                 item_delete_button.style.display = "none";
             }, 3000);
         }
+
+        item_container.ontouchstart = delete_trigger;
+        item_container.onclick = delete_trigger;
 
         cell.appendChild(item_container);
     }
