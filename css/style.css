@@ -6,42 +6,63 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
-    margin: 20px;
-    font-family: "Calibri", serif
+    font-family: "Calibri", serif;
 }
 
 img {
     image-rendering: pixelated;
 }
 
-.grayscale {
-    filter: grayscale(1);
-}
-
-.world_sort_tab {
-    user-select: none;
-    cursor: pointer;
-}
-
 td {
     padding: 0 5px;
     width: 64px;
     height: 64px;
-    border: 2px solid #000; /* black box around each cell */
-    /*background-color: rgba(255, 255, 255, 0.8); /* translucent background inside cells */
-    /*padding: 20px;
-    /*text-align: center;*/
-    border-radius: 5px; /* optional rounded corners */
+    border: 2px solid #000;
+    border-radius: 5px;
 }
 
 #inv {
     background-image: url('../img/inventory_tab.webp');
     background-size: 100% 100%;
     padding: 20px;
-    /*background-size: 100% auto;
-    padding: 48px 32px;
-    background-repeat: no-repeat;
-    background-position: center;*/
-    /*background-color: saddlebrown;*/
-    /*border-collapse: collapse;*/
+}
+
+.item-cell {
+
+}
+
+.item-cell.container {
+    width: 64px;
+    height: 96px;
+    z-index: 10;
+    touch-action: none;
+}
+
+.item-cell.container.item {
+    cursor: move;
+}
+
+.item-cell.name {
+    margin: 0 auto;
+    font-size: 14px;
+    user-select: none;
+}
+
+.item-cell.icon {
+    touch-action: none;
+    user-select: none;
+}
+
+.item-cell.price {
+    margin: 0 auto;
+    font-size: 12px;
+    user-select: none;
+}
+
+.item-cell.price.high {
+
+}
+
+.item-cell.price.low {
+
 }

@@ -1,0 +1,1 @@
+export  const APIEnvironment = new URL("https://api-dev.osrs.cafe");

@@ -1,7 +1,9 @@
+import { APIEnvironment } from "./api_environment.js";
+
 export class ItemDataHelper {
     static data;
     static async refresh_data() {
-        const url = new URL("https://api-dev.osrs.cafe/ge/items");
+        const url = new URL("/ge/items", APIEnvironment);
         console.log("Calling ", url);
         this.data = await (await fetch(url)).json();
     }
