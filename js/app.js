@@ -9,7 +9,7 @@ if (location.host !== "127.0.0.1" && location.protocol !== 'https:' && location.
 }
 
 const table_helper = new TableHelper({
-    table_element: document.getElementById("inv")
+    table_element: $id("inv")
 })
 
 function set_item_func(x, y, item) {
@@ -26,23 +26,23 @@ function refresh_table_func() {
 }
 
 StorageManager.init({
-    collection_dropdown: document.getElementById("collection-dropdown"),
-    collection_edit: document.getElementById("collection-edit"),
-    collection_remove: document.getElementById("collection-remove"),
-    collection_add: document.getElementById("collection-add"),
-    collection_add_custom: document.getElementById("collection-add-custom"),
+    collection_dropdown: $id("collection-dropdown"),
+    collection_edit: $id("collection-edit"),
+    collection_remove: $id("collection-remove"),
+    collection_add: $id("collection-add"),
+    collection_add_custom: $id("collection-add-custom"),
     state_change_func: () => { refresh_table_func(); }
 });
 StorageManager.refresh_ui();
 
 RefreshManager.start({
-    countdown_label: document.getElementById("refresh-countdown"),
-    refresh_button: document.getElementById("refresh-countdown-button"),
+    countdown_label: $id("refresh-countdown"),
+    refresh_button: $id("refresh-countdown-button"),
     table_refresh_func: refresh_table_func
 });
 
 FocusHelper.start();
 
-document.getElementById("id-lookup-button").onclick = () => {
+$id("id-lookup-button").onclick = () => {
     window.open('/idlookup.html','idlookup','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350');
 };
