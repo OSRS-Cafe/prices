@@ -13,7 +13,8 @@ export class TableHelper {
             const row = document.createElement("tr");
             for(let x = 0; x < table.width; x++) {
                 const cell = document.createElement('td');
-                const item_id = table.items[y][x];
+                cell.classList.add("inv-cell");
+                const item_id = table.get_item(x, y);
                 if(item_id != null) {
                     this.#add_item_to_cell(cell, item_id, x, y, set_item_func, refresh_table_func);
                 } else {
@@ -90,21 +91,23 @@ export class TableHelper {
         item_icon.oncontextmenu = e => e.preventDefault()
         item_container.appendChild(item_icon);
 
+        const price_format = new Intl.NumberFormat("de-DE");
+
         const item_price_high = document.createElement("p");
         item_price_high.classList.add("item-cell", "price", "high");
-        item_price_high.innerText = `⬆️${item_data.high}`;
+        item_price_high.innerText = `⬆️${price_format.format(item_data.high)}`;
         item_container.appendChild(item_price_high);
 
         const item_price_low = document.createElement("p");
         item_price_low.classList.add("item-cell", "price", "low");
-        item_price_low.innerText = `⬇️${item_data.low}`;
+        item_price_low.innerText = `⬇️${price_format.format(item_data.low)}`;
         item_container.appendChild(item_price_low);
 
         const item_delete_button = document.createElement("button");
         item_delete_button.innerText = "Delete";
         item_delete_button.style.display = "none";
         item_delete_button.onclick = () => {
-            StorageManager.get_active_collection().add_item(x, y, null);
+            StorageManager.get_active_collection().set_item(x, y, null);
             refresh_table_func(); //This function handles saving inside app.js. TODO: This should probably be handled more clearly
         }
         item_container.appendChild(item_delete_button);

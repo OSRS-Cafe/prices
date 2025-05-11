@@ -28,7 +28,17 @@
                 <button id="collection-add">+</button>
                 <button id="collection-add-custom">+(custom)</button>
             </div>
-            <div><button id="id-lookup-button">ID Lookup</button></div>
+            <div>
+                <div><button id="id-lookup-button-toggle">ID Lookup</button></div>
+                <div id="id-lookup-root" style="display:none;">
+                    <label>
+                        Item Name
+                        <input id="id-lookup-name-search" type="text">
+                        <button id="id-lookup-button-search">Search</button>
+                    </label>
+                    <div id="id-lookup-results"></div>
+                </div>
+            </div>
             <table align="center" id="inv"></table>
         </div>
     </body>

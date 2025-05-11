@@ -2,6 +2,7 @@ import { StorageManager } from "./storage_manager.js";
 import { TableHelper } from "./table_helper.js";
 import { RefreshManager } from "./refresh_manager.js";
 import { FocusHelper } from "./focus_helper.js";
+import { IDLookupManager } from "./id_lookup_manager.js";
 
 //Enforce HTTPS (https://stackoverflow.com/a/4723302)
 if (location.host !== "127.0.0.1" && location.protocol !== 'https:' && location.protocol !== 'file:') {
@@ -13,7 +14,7 @@ const table_helper = new TableHelper({
 })
 
 function set_item_func(x, y, item) {
-    StorageManager.get_active_collection().add_item(x, y, item);
+    StorageManager.get_active_collection().set_item(x, y, item);
 }
 
 function refresh_table_func() {
@@ -43,6 +44,11 @@ RefreshManager.start({
 
 FocusHelper.start();
 
-$id("id-lookup-button").onclick = () => {
-    window.open('/idlookup.html','idlookup','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350');
-};
+IDLookupManager.start({
+    button_toggle: $id("id-lookup-button-toggle"),
+    button_search: $id("id-lookup-button-search"),
+    name_input: $id("id-lookup-name-search"),
+    root_container: $id("id-lookup-root"),
+    results: $id("id-lookup-results"),
+    refresh_table_func: refresh_table_func
+});

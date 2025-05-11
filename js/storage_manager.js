@@ -18,8 +18,37 @@ export class ItemCollection {
         }
     }
 
-    add_item(x, y, item_id) {
+    set_item(x, y, item_id) {
         this.items[y][x] = item_id;
+    }
+
+    get_item(x, y) {
+        return this.items[y][x];
+    }
+
+    iterate_items(action) {
+        for(let y = 0; y < this.height; y++) {
+            for(let x = 0; x < this.width; x++) {
+                const result = action({
+                    x: x,
+                    y: y,
+                    item_id: this.get_item(x, y)
+                })
+                if(result === true) return;
+            }
+        }
+    }
+
+    push_item(item_id) {
+        let added = false;
+        this.iterate_items((data) => {
+            if(data.item_id == null) {
+                this.set_item(data.x, data.y, item_id);
+                added = true;
+                return true; //This breaks out of the loop of iterate_items
+            }
+        });
+        return added;
     }
 
     static from_json(json) {
